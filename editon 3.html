@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THIRD EDITION</title>
+    <title>FIRST EDITION</title>
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Montserrat:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
@@ -83,7 +83,7 @@
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        /* Navigation */
+        /* Navigation - now fixed top bar with hamburger */
         nav {
             position: fixed;
             top: 0;
@@ -106,29 +106,191 @@
         .nav-right {
             display: flex;
             align-items: center;
-            gap: 2rem;
+            gap: 1.5rem;
+        }
+
+        /* Hamburger Menu Button */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+            padding: 5px;
+            background: none;
+            border: none;
+            z-index: 1001;
+            position: relative;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 28px;
+            height: 2.5px;
+            background: var(--primary);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            transform-origin: center;
+        }
+
+        body.dark-mode .hamburger span {
+            background: var(--primary);
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+            transform: scaleX(0);
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
         }
 
         .theme-toggle {
             background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            border: 2px solid var(--accent);
+            color: var(--accent);
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            border: 1px solid transparent;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
             transition: all 0.3s ease;
+            flex-shrink: 0;
         }
 
         .theme-toggle:hover {
+            background: rgba(255, 20, 147, 0.1);
+            transform: scale(1.1);
+        }
+
+        body.dark-mode .theme-toggle {
+            border-color: var(--accent-light);
+            color: var(--accent-light);
+        }
+
+        /* Sliding Sidebar */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -320px;
+            width: 300px;
+            height: 100vh;
+            background: var(--secondary);
+            box-shadow: -5px 0 30px rgba(0, 0, 0, 0.15);
+            z-index: 999;
+            padding: 5rem 2rem 2rem;
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            border-left: 1px solid var(--border);
+        }
+
+        body.dark-mode .sidebar {
+            background: #1a1a1a;
+            border-left-color: #333;
+        }
+
+        .sidebar.open {
+            right: 0;
+        }
+
+        .sidebar-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 998;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .sidebar-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .sidebar-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .sidebar-links a {
+            text-decoration: none;
+            color: var(--primary);
+            font-size: 1.1rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+            transition: color 0.3s ease;
+            display: block;
+        }
+
+        .sidebar-links a:hover {
+            color: var(--accent);
+        }
+
+        body.dark-mode .sidebar-links a {
+            border-bottom-color: #333;
+        }
+
+        .sidebar-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+        }
+
+        body.dark-mode .sidebar-logo {
+            background: linear-gradient(135deg, var(--primary), var(--accent-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .sidebar-social {
+            margin-top: 2rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .sidebar-social a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: var(--primary);
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        .sidebar-social a:hover {
             border-color: var(--accent);
-            background: rgba(212, 175, 55, 0.1);
-            transform: rotate(20deg);
+            color: var(--accent);
+            background: rgba(255, 20, 147, 0.05);
+        }
+
+        body.dark-mode .sidebar-social a {
+            border-color: #333;
         }
 
         .logo {
@@ -136,10 +298,6 @@
             font-size: 1.8rem;
             font-weight: 900;
             letter-spacing: 2px;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
             transition: all 0.3s ease;
         }
 
@@ -156,76 +314,11 @@
             transition: all 0.3s ease;
         }
 
-        body.dark-mode .logo {
+        body.dark-mode .logo a {
             background: linear-gradient(135deg, var(--primary), var(--accent-light));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 3rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--primary);
-            font-size: 0.9rem;
-            font-weight: 500;
-            position: relative;
-            transition: color 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--accent);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        /* Navigation right section */
-        .nav-right {
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-        }
-
-        /* Dark Mode Toggle */
-        .theme-toggle {
-            background: none;
-            border: 2px solid var(--accent);
-            color: var(--accent);
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            transition: all 0.3s ease;
-        }
-
-        .theme-toggle:hover {
-            background: rgba(255, 20, 147, 0.1);
-            transform: scale(1.1);
-        }
-
-        body.dark-mode .theme-toggle {
-            border-color: var(--accent-light);
-            color: var(--accent-light);
         }
 
         /* Hero Section */
@@ -900,8 +993,8 @@
                 font-size: 1.4rem;
             }
 
-            .nav-links {
-                gap: 1.5rem;
+            .logo a {
+                font-size: 1.4rem;
             }
 
             .hero h1 {
@@ -929,15 +1022,54 @@
                 flex-direction: column;
             }
 
-            .nav-right {
-                flex-direction: column;
-                gap: 1rem;
+            .sidebar {
+                width: 280px;
+                right: -290px;
+                padding: 4rem 1.5rem 1.5rem;
             }
 
-            .theme-toggle {
-                width: 40px;
-                height: 40px;
+            .sidebar-links a {
                 font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero-badge {
+                font-size: 0.7rem;
+                padding: 0.5rem 1rem;
+            }
+
+            .hero-subtitle {
+                font-size: 0.9rem;
+            }
+
+            .magazine-grid {
+                padding: 3rem 1rem;
+            }
+
+            .featured {
+                padding: 3rem 1.5rem;
+            }
+
+            .newsletter {
+                padding: 3rem 1.5rem;
+            }
+
+            footer {
+                padding: 2rem 1.5rem;
+            }
+
+            .sidebar {
+                width: 100%;
+                right: -100%;
+            }
+
+            .sidebar.open {
+                right: 0;
             }
         }
     </style>
@@ -949,15 +1081,33 @@
     <nav>
         <div class="logo"><a href="index.html">STUDIO 23</a></div>
         <div class="nav-right">
-            <ul class="nav-links">
-                <li><a href="#featured">Featured</a></li>
-                <li><a href="#magazine">Editions</a></li>
-                <li><a href="#newsletter">Subscribe</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
             <button class="theme-toggle" id="themeToggle" title="Toggle dark mode">🌙</button>
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </nav>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Sliding Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-logo">STUDIO 23</div>
+        <ul class="sidebar-links">
+            <li><a href="#featured" class="sidebar-link">Featured</a></li>
+            <li><a href="#magazine" class="sidebar-link">Editions</a></li>
+            <li><a href="#newsletter" class="sidebar-link">Subscribe</a></li>
+            <li><a href="#contact" class="sidebar-link">Contact</a></li>
+        </ul>
+        <div class="sidebar-social">
+            <a href="https://www.instagram.com/studio_23_fashion?igsh=MTB4bmNvdHg5eG5lbA%3D%3D&utm_source=qr"
+                title="Instagram">📷</a>
+            <a href="https://www.tiktok.com/@studio23fashion?_r=1&_t=ZS-96aDFZbSxms" title="TikTok">🎬</a>
+        </div>
+    </div>
 
     <!-- Hero Section -->
     <section class="hero">
@@ -970,6 +1120,7 @@
             <a href="#magazine" class="hero-button">Explore Now</a>
         </div>
     </section>
+
 
 
     <section class="magazine-grid" id="magazine">
@@ -1022,6 +1173,19 @@
         <img id="modalImage" src="" alt="">
     </div>
 
+    <!-- Newsletter -->
+    <section class="newsletter" id="newsletter">
+        <div class="newsletter-content">
+            <h2>Subscribe to Studio 23</h2>
+            <p>Be the first to know about new collections, exclusive drops, and behind-the-scenes content.</p>
+            <form class="newsletter-form" id="newsletterForm">
+                <input type="email" class="newsletter-input" placeholder="Enter your email" required>
+                <button type="submit" class="newsletter-button">Subscribe</button>
+            </form>
+            <p style="font-size: 0.8rem; margin-top: 0.5rem; opacity: 0.6;">No spam, unsubscribe anytime.</p>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer id="contact">
         <div class="footer-content">
@@ -1073,13 +1237,9 @@
         </div>
     </footer>
 
-
-
-
     <script>
         // Dark/Light Mode Toggle
         const themeToggle = document.getElementById('themeToggle');
-        const htmlElement = document.documentElement;
         const body = document.body;
 
         // Check for saved theme preference or default to light mode
@@ -1092,15 +1252,11 @@
         themeToggle.addEventListener('click', () => {
             body.classList.toggle('dark-mode');
             const isDarkMode = body.classList.contains('dark-mode');
-
-            // Update button icon
             themeToggle.textContent = isDarkMode ? '☀️' : '🌙';
-
-            // Save preference to localStorage
             localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
         });
 
-        // Optional: Respect system preference on first load
+        // Respect system preference on first load if no saved preference
         if (!localStorage.getItem('theme')) {
             const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
             if (prefersDark) {
@@ -1110,54 +1266,112 @@
             }
         }
 
-        /* IMAGE POPUP */
+        // ========================
+        // SLIDING SIDEBAR
+        // ========================
+
+        const hamburger = document.getElementById('hamburger');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebarOverlay');
+        const sidebarLinks = document.querySelectorAll('.sidebar-link');
+
+        function toggleSidebar() {
+            const isOpen = sidebar.classList.toggle('open');
+            overlay.classList.toggle('active');
+            hamburger.classList.toggle('active');
+            document.body.style.overflow = isOpen ? 'hidden' : '';
+        }
+
+        function closeSidebar() {
+            sidebar.classList.remove('open');
+            overlay.classList.remove('active');
+            hamburger.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Open/close on hamburger click
+        hamburger.addEventListener('click', toggleSidebar);
+
+        // Close on overlay click
+        overlay.addEventListener('click', closeSidebar);
+
+        // Close on link click (smooth navigation)
+        sidebarLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                closeSidebar();
+                // Smooth scroll to target
+                const targetId = link.getAttribute('href');
+                if (targetId && targetId.startsWith('#')) {
+                    e.preventDefault();
+                    const target = document.querySelector(targetId);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }
+            });
+        });
+
+        // Close on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+                closeSidebar();
+            }
+        });
+
+        // ========================
+        // IMAGE POPUP
+        // ========================
 
         const modal = document.getElementById("imageModal");
         const modalImage = document.getElementById("modalImage");
         const closeModal = document.querySelector(".close-modal");
 
         document.querySelectorAll(".magazine-image").forEach(image => {
-
             image.addEventListener("click", () => {
-
                 modal.style.display = "flex";
                 modalImage.src = image.src;
-
+                document.body.style.overflow = 'hidden';
             });
-
         });
 
-        closeModal.addEventListener("click", () => {
-
+        function closeImageModal() {
             modal.style.display = "none";
+            document.body.style.overflow = '';
+        }
 
-        });
+        closeModal.addEventListener("click", closeImageModal);
 
         modal.addEventListener("click", (e) => {
-
             if (e.target === modal) {
-
-                modal.style.display = "none";
-
+                closeImageModal();
             }
-
         });
-
-        /* ESC KEY SUPPORT */
 
         document.addEventListener("keydown", (e) => {
-
             if (e.key === "Escape") {
-
-                modal.style.display = "none";
-
+                if (modal.style.display === "flex") {
+                    closeImageModal();
+                }
+                if (sidebar.classList.contains('open')) {
+                    closeSidebar();
+                }
             }
-
         });
 
+        // ========================
+        // NEWSLETTER FORM
+        // ========================
+
+        const newsletterForm = document.getElementById('newsletterForm');
+        newsletterForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const input = newsletterForm.querySelector('.newsletter-input');
+            if (input.value.trim()) {
+                alert('Thank you for subscribing to Studio 23! ✨');
+                input.value = '';
+            }
+        });
     </script>
-
-
 
 </body>
 
